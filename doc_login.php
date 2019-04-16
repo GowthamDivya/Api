@@ -22,6 +22,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 						
 						$stmt->bind_result($id,$dname,$dgen,$dmob,$demail,$dcity,$dspec,$dexp,$dreg,$status);
 						$stmt->fetch();
+
 					
 						$user = array(
 							'id'=>$id, 
@@ -35,10 +36,19 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 							'dreg'=>$dreg,
 							'status'=>$status,
                         );
-                    
+                        if($status == 1)
+                        {
+
                         $response['error'] = false; 
 						$response['message'] = 'Login successfull'; 
                         $response['user'] = $user; 
+                  	    	
+                        }
+                        else
+                        {
+                        	$response['message'] = 'user not activated';
+                        }
+                    
                 
                     }else{
 						//if the user not found 
