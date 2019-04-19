@@ -17,7 +17,7 @@
 		   	and isset($_POST['pmob'])
 		    and isset($_POST['pemail'])
 		    and isset($_POST['pcity'])
-		    and isset($_POST['pdoc'])
+		    and isset($_POST['did'])
 
 		)
 		 {
@@ -28,9 +28,10 @@
 					$pmob = $_POST['pmob'];
 					$pemail = $_POST['pemail'];
 					$pcity = $_POST['pcity'];
-					$pdoc=$_POST['pdoc'];
+					$did = $_POST['did'];
 					$pid = mt_rand(100000,999999); 	
 					echo $pid;
+
 
 	
 			
@@ -48,18 +49,17 @@
 					}else{
 						
 					
-	$stmt = $conn->prepare("INSERT INTO patients (pid,pname,pgen,page,pmob,pemail,pcity,pdoc) VALUES (?,?,?,?,?,?,?,?)");
-	$stmt->bind_param("issiisss", $pid,$pname,$pgen,$page,$pmob,$pemail,$pcity,$pdoc);
+	$stmt = $conn->prepare("INSERT INTO patients (pid,pname,pgen,page,pmob,pemail,pcity,did) VALUES (?,?,?,?,?,?,?,?)");
+	$stmt->bind_param("issiissi",$pid,$pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
 										
 										
 
 											if($stmt->execute()){
 
-
-			$stmt = $conn->prepare("SELECT  pid,pname,pgen,page,pmob,pemail,pcity,pdoc FROM patients WHERE pid = ?"); 
+			$stmt = $conn->prepare("SELECT  pid,pname,pgen,page,pmob,pemail,pcity,did FROM patients WHERE pid = ?"); 
 							$stmt->bind_param("i",$pid);
 							$stmt->execute();
-							$stmt->bind_result( $pid, $pname,$pgen,$page,$pmob,$pemail,$pcity,$pdoc);
+							$stmt->bind_result( $pid, $pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
 							$stmt->fetch();
 							$user = array(
 								'pid'=>$pid, 
@@ -69,8 +69,7 @@
 								'pmob'=>$pmob,
 								'pemail'=>$pemail,
 								'pcity'=>$pcity,
-								'pdoc'=>$pdoc
-								
+								'did'=>$did
 							);						
 							$stmt->close();
 
