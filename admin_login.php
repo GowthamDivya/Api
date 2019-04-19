@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     { 
         
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
         
 					//creating the query 
 					$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ? AND password = ?");

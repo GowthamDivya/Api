@@ -7,19 +7,26 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     { 
         
         $demail = $_POST['demail'];
-        $dpass = $_POST['dpass'];
+        $dpass = md5($_POST['dpass']);
         
 					//creating the query 
 					$stmt = $conn->prepare("SELECT  id,dname,dgen,dmob,demail,dcity,dspec,dexp,dreg,status FROM doctors WHERE demail = ? AND dpass = ?");
-					$stmt->bind_param("ss",$demail,$dpass);
+					 
 					
+				
+					$stmt->bind_param("ss",$demail,$dpass);
+					 
 					$stmt->execute();
 					
 					$stmt->store_result();
 					
+								
 					//if the user exist with given credentials 
 					if($stmt->num_rows > 0){
+				
+							
 						
+		
 						$stmt->bind_result($id,$dname,$dgen,$dmob,$demail,$dcity,$dspec,$dexp,$dreg,$status);
 						$stmt->fetch();
 
