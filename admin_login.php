@@ -1,6 +1,7 @@
 <?php
 require_once'DbConnect.php';
 $response = array();
+
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
     if(isset($_POST['username']) and isset($_POST['password']))
@@ -11,12 +12,14 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         
 					//creating the query 
 					$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ? AND password = ?");
+					
 					$stmt->bind_param("ss",$username, $password);
 					
 					$stmt->execute();
 					
 					$stmt->store_result();
 					
+					var_dump($stmt);
 					//if the user exist with given credentials 
 					if($stmt->num_rows > 0){
 						

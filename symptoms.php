@@ -9,6 +9,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         $cid = $_POST['cid'];
        
     
+
            //checking if the user is already exist with this username or email
                     //as the email and username should be unique for every user 
 
@@ -22,12 +23,15 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                   //if the user already exist in the database           
 					if($stmt->num_rows > 0){
 						$response['error'] = true;
-						$response['message'] = 'sympto already Exist';
+						$response['message'] = 'symptom already Exist';
 						$stmt->close();
                     }
                     else{
+
 						$stmt = $conn->prepare("INSERT INTO symptoms(sname,cid) VALUES (?,?)");
-						$stmt->bind_param("ss",$sname,$cid);
+						$stmt->bind_param("si",$sname,$cid);
+									
+
 
 						if($stmt->execute()){
 							$stmt = $conn->prepare("SELECT sid,sname,cid FROM symptoms WHERE sname = ?"); 
