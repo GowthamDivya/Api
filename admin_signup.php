@@ -13,9 +13,9 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     
            //checking if the user is already exist with this username or email
                     //as the email and username should be unique for every user 
-                    echo "hi";
+
 					$stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");              
-                    echo "hi";
+
                     $stmt->bind_param("ss", $username, $email);
                     $stmt->execute();
 					$stmt->store_result();

@@ -13,7 +13,12 @@ $size1=(int)$size;
 $i =0;
 while($i <$size) {
   // echo "loop";
-   $res =mysqli_query($conn,"SELECT sname FROM `symptoms` WHERE cname = '$response[$i]'") ;
+   $res =mysqli_query($conn,"SELECT sname FROM `symptoms` WHERE cname = '$response[$i]'");
+
+
+
+   var_dump($res);
+
    $j=sizeof($res);
 
     $k=0;
@@ -21,13 +26,13 @@ while($i <$size) {
     {
     $data = mysqli_fetch_array($res);
     $k++;
-//echo $data;
-echo "symptoms".$data['sname'];
+
+echo "symptoms".$data['sname'].PHP_EOL;
     }
    
    $i++;
 $data1 = mysqli_fetch_array($res);
 //echo $data;
-echo "symptoms".$data1['sname'];
+echo "symptoms".$data1['sname'].PHP_EOL;
 }
 ?>
