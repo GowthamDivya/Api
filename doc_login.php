@@ -9,14 +9,18 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         $demail = $_POST['demail'];
         $dpass = md5($_POST['dpass']);
         
+        
+        
 					//creating the query 
-					$stmt = $conn->prepare("SELECT  id,dname,dgen,dmob,demail,dcity,dspec,dexp,dreg,status FROM doctors WHERE demail = ? AND dpass = ?");
+$stmt = $conn->prepare("SELECT  id,dname,dgen,dmob,demail,dcity,dspec,dexp,dreg,status FROM doctors WHERE demail = ? AND dpass = ?");
 					 
-					
+
 				
 					$stmt->bind_param("ss",$demail,$dpass);
 					 
+
 					$stmt->execute();
+					
 					
 					$stmt->store_result();
 					
@@ -25,8 +29,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					if($stmt->num_rows > 0){
 				
 							
-						
-		
+
 						$stmt->bind_result($id,$dname,$dgen,$dmob,$demail,$dcity,$dspec,$dexp,$dreg,$status);
 						$stmt->fetch();
 
@@ -53,6 +56,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                         }
                         else
                         {
+                        	$response['error'] = 'flase';
                         	$response['message'] = 'user not activated';
                         }
                     
@@ -60,7 +64,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                     }else{
 						//if the user not found 
 						$response['error'] = false; 
-						$response['message'] = 'Invalid username or password';
+						$response['message'] = 'Invalid username or dpass';
 					}
 				}
     }

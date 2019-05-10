@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					
 					$stmt->store_result();
 					
-					var_dump($stmt);
+
 					//if the user exist with given credentials 
 					if($stmt->num_rows > 0){
 						
