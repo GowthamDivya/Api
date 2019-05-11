@@ -3,13 +3,11 @@
 	require_once 'DbConnect.php';
 	
 		$response = array();
-	
-	
+
 	
 		if($_SERVER['REQUEST_METHOD']=='POST')
 	{
 
- 
 		 if(
 		 		isset($_POST['pname'])
 		  	and isset($_POST['pgen'])
@@ -21,6 +19,7 @@
 
 		)
 		 {
+
 		 	
 					$pname = $_POST['pname'];
 					$pgen = $_POST['pgen'];									 
@@ -29,19 +28,14 @@
 					$pemail = $_POST['pemail'];
 					$pcity = $_POST['pcity'];
 					$did = $_POST['did'];
-					$pid = mt_rand(100000,999999); 	
-					echo $pid;
-
-
-	
+				 	
 			
-					$stmt = $conn->prepare("SELECT id FROM patients WHERE pid = ? OR pemail = ?");
-					$stmt->bind_param("is", $pid, $pemail);
+					$stmt = $conn->prepare("SELECT id FROM patients WHERE id = ? OR pemail = ?");
+					$stmt->bind_param("is", $id, $pemail);
 					$stmt->execute();
 					$stmt->store_result();
 					
 					
-
 					if($stmt->num_rows > 0){
 						$response['error'] = true;
 						$response['message'] = 'User already registered';
@@ -49,20 +43,22 @@
 					}else{
 						
 					
-	$stmt = $conn->prepare("INSERT INTO patients (pid,pname,pgen,page,pmob,pemail,pcity,did) VALUES (?,?,?,?,?,?,?,?)");
-	$stmt->bind_param("issiissi",$pid,$pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
+	$stmt = $conn->prepare("INSERT INTO patients (id,pname,pgen,page,pmob,pemail,pcity,did) VALUES (?,?,?,?,?,?,?,?)");
+	$stmt->bind_param("issiissi",$id,$pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
 										
 										
 
-											if($stmt->execute()){
+			if($stmt->execute()){
 
-			$stmt = $conn->prepare("SELECT  pid,pname,pgen,page,pmob,pemail,pcity,did FROM patients WHERE pid = ?"); 
-							$stmt->bind_param("i",$pid);
+			$stmt = $conn->prepare("SELECT  id,pname,pgen,page,pmob,pemail,pcity,did FROM patients WHERE pemail = ?"); 
+							$stmt->bind_param("s",$pemail);
 							$stmt->execute();
-							$stmt->bind_result( $pid, $pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
+							$stmt->bind_result( $id,$pname,$pgen,$page,$pmob,$pemail,$pcity,$did);
 							$stmt->fetch();
+
 							$user = array(
-								'pid'=>$pid, 
+
+								'id'=>$id,
 								'pname'=>$pname, 
 								'pgen'=>$pgen,
 								'page'=>$page,	

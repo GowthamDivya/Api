@@ -22,31 +22,22 @@
 	}
 	
 	//creating a query
-	$stmt = $conn->prepare("SELECT id, dname,dgen,dmob,demail,dcity,dspec,dexp,dreg,status   FROM doctors;");
+	$stmt = $conn->prepare("SELECT sname FROM symptoms;");
 	
 	//executing the query 
 	$stmt->execute();
 	
 	//binding results to the query 
-	$stmt->bind_result($id, $dname,$dgen,$dmob,$demail,$dcity,$dspec,$dexp,$dreg,$status);
+	$stmt->bind_result($sname);
 	
 	$products = array(); 
 	
 	//traversing through all the result 
 	while($stmt->fetch()){
 		$temp = array();
-		$temp['id'] = $id; 
-		$temp['dname'] = $dname; 
-		$temp['dgen'] = $dgen; 
-		$temp['dmob'] = $dmob; 
-		$temp['demail'] = $demail;
-		$temp['dcity'] = $dcity;
-		$temp['dspec'] = $dspec;
-		$temp['dexp'] = $dexp;
-		$temp['dreg'] = $dreg;
-		$temp['status'] = $status;
+		$temp['sname'] = $sname;
 
-		array_push($products,$temp);
+		array_push($products, $temp);
 	}
 	
 	//displaying the result in json format 
